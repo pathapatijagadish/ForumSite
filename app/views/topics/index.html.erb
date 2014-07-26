@@ -24,7 +24,7 @@
     <% end %>
   </tbody>
 </table>
-
+<%= will_paginate @topics %>
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_forum_topic_path(@forum),
             :class => 'btn btn-primary' if current_user %>
