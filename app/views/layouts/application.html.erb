@@ -1,14 +1,59 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Forumsite</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Forumsite" %></title>
+    <%= csrf_meta_tags %>
+    
+    <%= stylesheet_link_tag "application", :media => "all" %>
+    
+    <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
+    
+    <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
+    
+    <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
+    
+    <%= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
+    
+    <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
 
-<%= yield %>
+    <%= javascript_include_tag "application" %>
+  </head>
+  
+  <body>
 
-</body>
+    <div class="navbar navbar-fluid-top">
+      <div class="navbar-inner">
+        <div class="container-fluid nav_background">         
+          <a class="brand" href="#">Forumsite</a>
+          <div class="container-fluid nav-collapse">
+            <ul class="nav" style="float:left;">
+              <li><%= link_to "Forums", forums_path  %></li>
+            </ul>
+            <ul class="nav"  style="float:right;">
+              <% if user_signed_in? %>
+                <li><%= link_to "Welcome #{current_user.email}" ,"javascript:;"%></li>
+                <li><%= link_to "Logout", destroy_user_session_path,:method=>:delete %></li>
+              <% else %>
+                <li><%= link_to "Login", new_user_session_path %></li>
+                <li><%= link_to "Register",new_user_registration_path %></li>
+              <% end %>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <% flash.each do |type, message| %>
+        <div class="alert <%= bootstrap_class_for(type) %> fade in">
+          <button class="close" data-dismiss="alert">×</button>
+          <%= message.html_safe %>
+        </div>
+      <% end %>
+      <%= yield %>   
+    </div> <!-- /container -->
+  </body>
 </html>
