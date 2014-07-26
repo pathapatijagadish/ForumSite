@@ -16,6 +16,7 @@ class TopicsController < ApplicationController
   end
 
   def edit
+    autherize?(@topic)
   end
 
   def create    
@@ -40,6 +41,7 @@ class TopicsController < ApplicationController
   end
 
   def destroy
+    autherize?(@topic)
     if @topic.destroy
       flash[:notice] = 'Topic was successfully deleted.'
       redirect_to forum_topics_url
@@ -52,8 +54,7 @@ class TopicsController < ApplicationController
   private
     
     def set_topic
-      @topic = Topic.find(params[:id])
-      autherize?(@topic)
+      @topic = Topic.find(params[:id])      
       rescue ActiveRecord::RecordNotFound
         flash[:error] = "Record not found ..!!!"
         redirect_to root_url
