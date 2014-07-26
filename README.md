@@ -2,8 +2,12 @@ This is simple forum and topics application .
 
 Demo Heroku Link:
 
+http://forumsite.herokuapp.com/
 
+Heroku Admin Credentials:
 
+Login: admin@example.com
+Password: password
 
 Run the appication in local:
 
